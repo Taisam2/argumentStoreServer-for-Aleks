@@ -2,7 +2,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-from swagger_server.routes.topic import topic
+from routes.topic import topic
 app.include_router(topic)
 
 @app.get("/")

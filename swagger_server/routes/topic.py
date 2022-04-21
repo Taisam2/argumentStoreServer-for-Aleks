@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 
-from swagger_server.models.topic import Topic
+from models.topic import Topic
 from config.db import conn
-from swagger_server.schemas.topic import topicEntity, topicsEntity
-from swagger_server.schemas.argument import argumentEntity, argumentsEntity
+from schemas.topic import topicEntity, topicsEntity
+from schemas.argument import argumentEntity, argumentsEntity
 
 topic = APIRouter() 
 

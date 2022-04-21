@@ -1,8 +1,8 @@
 import connexion
 import six
 
-from swagger_server.models.argument import Argument  # noqa: E501
-from swagger_server import util
+from models.argument import Argument  # noqa: E501
+import util
 
 
 def add_argument(body):  # noqa: E501
