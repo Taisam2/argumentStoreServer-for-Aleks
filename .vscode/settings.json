@@ -1,0 +1,9 @@
+{
+    "python.disableInstallationCheck": false,
+    "python.autoComplete.extraPaths": [
+        "C:/Python39/Lib/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "C:/Python39/Lib/site-packages"
+    ]
+}
