@@ -13,8 +13,8 @@ async def findAllTopics():
     return topicsEntity(conn.local.topic.find())
 
 
-@topic.post('/')
+@topic.post('/addTopic')
 async def createTopic(topic: Topic):
     json_compatible_topic = jsonable_encoder(topic)
     conn.local.topic.insert_one(json_compatible_topic)
-    return ""
+    return "Successful added a Topic!"
