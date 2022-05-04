@@ -2,7 +2,7 @@ def topicEntity(item) -> dict:
     return {
         "id": str(item["_id"]),
         "title": item["title"],
-        "argument":item["argument"]
+        "solutionOption": item["solutionOption"]
     }
 
 def topicsEntity(entity) -> list:

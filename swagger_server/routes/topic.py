@@ -1,17 +1,20 @@
+from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 
 from models.topic import Topic
 from config.db import conn
 from schemas.topic import topicEntity, topicsEntity
-from schemas.argument import argumentEntity, argumentsEntity
 
 topic = APIRouter() 
 
-@topic.get('/')
+@topic.get('/getTopics')
 async def findAllTopics():
     return topicsEntity(conn.local.topic.find())
 
+@topic.get('/findById')
+async def findTopicById(searchedId: str):
+    return topicsEntity(conn.local.topic.find({ "_id": ObjectId(searchedId)}))
 
 @topic.post('/addTopic')
 async def createTopic(topic: Topic):

@@ -1,9 +1,13 @@
 from datetime import datetime
 from pydantic import BaseModel
 
+
 class Argument(BaseModel):
-    date: datetime
-    text: str
+    topicId: str
+    argumentOption: str
+    solutionOption: str
+    description: str
+    date: str
     author: str
     approval: str
     links: str

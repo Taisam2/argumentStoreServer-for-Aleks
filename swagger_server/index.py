@@ -1,14 +1,30 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from routes.argument import argument
 from routes.topic import topic
 
 
-app = FastAPI()
+
 
 origins = [
     "http://localhost:4200",
 ]
+
+
+
+tags_metadata = [
+    {
+        "name": "arguments",
+        "description": "Operations with Arguments."
+    },
+    {
+        "name": "topics",
+        "description": "Operations with Topics."
+    }
+]
+
+app = FastAPI(title="ArgumentStore", openapi_tags=tags_metadata)
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,8 +34,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(topic)
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app.include_router(argument, tags=["arguments"])
+app.include_router(topic, tags=["topics"])
