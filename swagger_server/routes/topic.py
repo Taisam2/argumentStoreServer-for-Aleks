@@ -1,4 +1,5 @@
 from distutils.log import error
+import logging
 from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
@@ -24,11 +25,13 @@ async def createTopic(topic: Topic):
     return "Successful added a Topic!"
 
 @topic.post('/addSolutionOption')
-async def addSolutionToArray(solutionOption: str, searchedId: str):
+async def addSolutionToArray(topic: Topic):
+    print(topic)
+    
     try: 
-        topicEntity(conn.local.topic.update_one(
-        { "_id": ObjectId(searchedId)}, { '$push': {"solutionOption": solutionOption}}
-        ))
+        conn.local.topic.update_one(
+        { "_id": ObjectId(topic.id)}, { '$push': {"solutionOption":{ "$each": topic.solutionOption} }}
+        )
     except Exception as e:
         print(e.__context__)
     return "Possible Solution successfully added to Topic!"
