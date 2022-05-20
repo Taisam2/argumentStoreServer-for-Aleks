@@ -22,7 +22,7 @@ async def findTopicById(searchedId: str):
 async def createTopic(topic: Topic):
     json_compatible_topic = jsonable_encoder(topic)
     conn.local.topic.insert_one(json_compatible_topic)
-    return "Successful added a Topic!"
+    return "Thema erfolgreich hinzugefügt!"
 
 @topic.post('/addSolutionOption')
 async def addSolutionToArray(topic: Topic):
@@ -34,4 +34,4 @@ async def addSolutionToArray(topic: Topic):
         )
     except Exception as e:
         print(e.__context__)
-    return "Possible Solution successfully added to Topic!"
+    return "Lösungsvorschlag erfolgreich zum Thema hinzugefügt!"

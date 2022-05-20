@@ -16,6 +16,6 @@ async def findAllArguments():
 async def createArgument(argument: Argument):
     json_compatible_argument = jsonable_encoder(argument)
     conn.local.argument.insert_one(json_compatible_argument)
-    return "Successful added a Argument!"
+    return "Argument erfolgreich hinzugefügt!"
 
 
