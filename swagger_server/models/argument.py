@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
+from typing import Optional
 
 
 class Argument(BaseModel):
@@ -7,7 +8,7 @@ class Argument(BaseModel):
     argumentOption: str
     solutionOption: str
     description: str
-    date: str
+    date: Optional[str] = datetime.now().strftime("%d:%m:%Y %H:%M:%S")
     author: str
     approval: str
     links: str

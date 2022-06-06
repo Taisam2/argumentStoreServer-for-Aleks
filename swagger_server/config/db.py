@@ -1,37 +1,13 @@
 from pymongo import MongoClient
+from config.util import DbUtil
+from urllib.parse import quote_plus
 
-conn = MongoClient("mongodb://localhost:27017")
+u = DbUtil()
+
+try:
+    conn = MongoClient("mongodb+srv://" + u.username +":" + u.passwort + "@argumentstore.lkyrg.mongodb.net/?retryWrites=true&w=majority")
+except Exception as e:
+    print("Db-connection Error: " + e)
 
 
-client = MongoClient('mongodb://localhost:27017/')
-result = client['local']['argument'].aggregate([
-    {
-        '$lookup': {
-            'from': 'argument', 
-            'let': {
-                'solOpt': '$solutionOption', 
-                'argsOpt': '$argumentOption'
-            }, 
-            'pipeline': [
-                {
-                    '$match': {
-                        '$expr': {
-                            '$and': [
-                                {
-                                    '$eq': [
-                                        '$argumentOption', '$$argsOpt'
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                }
-            ], 
-            'as': 'comments'
-        }
-    }, {
-        '$group': {
-            '_id': '$comments'
-        }
-    }
-])
+

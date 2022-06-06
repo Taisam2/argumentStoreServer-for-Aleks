@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from config.db import conn, result
+from config.db import conn
 from models.argument import Argument
 from schemas.argument import argumentsEntity
 
@@ -10,12 +10,23 @@ argument = APIRouter()
 
 @argument.get('/getArguments')
 async def findAllArguments():
-    return argumentsEntity(conn.local.argument.find())
+    try:
+        rsp = argumentsEntity(conn.ArgumentStore.local.argument.find())
+        if rsp == []:
+            return "Bisher sind keine Argumente gespeichert."
+        else:
+            return argumentsEntity(conn.ArgumentStore.local.argument.find())
+    except Exception as e:
+        print("Error in /getArguments route: " + e)
 
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
-    json_compatible_argument = jsonable_encoder(argument)
-    conn.local.argument.insert_one(json_compatible_argument)
-    return "Argument erfolgreich hinzugefügt!"
+    try:
+        conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
+        return "Argument erfolgreich hinzugefügt!"
+    except Exception as e:
+        print("Error in /addArgument route: " + e)
+
+    
 
 
