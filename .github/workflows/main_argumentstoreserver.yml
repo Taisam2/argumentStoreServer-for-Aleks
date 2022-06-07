@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'ArgumentStoreServer'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_144344BC458B4F4DB8BA3B3BE4587941 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7DC02306D61F45F5AFA7D1C453A91C20 }}
