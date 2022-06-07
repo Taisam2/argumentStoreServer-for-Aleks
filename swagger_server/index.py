@@ -36,3 +36,8 @@ app.add_middleware(
 
 app.include_router(argument, tags=["arguments"])
 app.include_router(topic, tags=["topics"])
+
+
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
