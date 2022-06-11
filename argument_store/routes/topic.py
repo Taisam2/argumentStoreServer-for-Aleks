@@ -1,12 +1,10 @@
-from distutils.log import error
-import logging
 from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 
-from models.topic import Topic
-from config.db import conn
-from schemas.topic import topicEntity, topicsEntity
+from argument_store.models.topic import Topic
+from argument_store.config.db import conn
+from argument_store.schemas.topic import topicEntity, topicsEntity
 
 topic = APIRouter() 
 

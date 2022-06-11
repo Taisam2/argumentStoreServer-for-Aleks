@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from argumentStore.routes.argument import argument
-from argumentStore.routes.topic import topic
+from argument_store.routes.argument import argument
+from argument_store.routes.topic import topic
 
 
 
