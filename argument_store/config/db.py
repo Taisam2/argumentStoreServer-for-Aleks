@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from config.util import DbUtil
+from argument_store.config.util import DbUtil
 
 
 u = DbUtil()

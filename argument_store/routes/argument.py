@@ -1,7 +1,8 @@
+from typing import List
 from fastapi import APIRouter
-from config.db import conn
-from models.argument import Argument
-from schemas.argument import argumentsEntity
+from argument_store.config.db import conn
+from argument_store.models.argument import Argument
+from argument_store.schemas.argument import argumentsEntity
 
 from fastapi.encoders import jsonable_encoder
 
@@ -11,11 +12,11 @@ argument = APIRouter()
 @argument.get('/getArguments')
 async def findAllArguments():
     try:
-        rsp = argumentsEntity(conn.ArgumentStore.local.argument.find())
-        if rsp == []:
+        response: List = argumentsEntity(conn.ArgumentStore.local.argument.find())
+        if not response:
             return "Bisher sind keine Argumente gespeichert."
         else:
-            return argumentsEntity(conn.ArgumentStore.local.argument.find())
+            return response
     except Exception as e:
         print("Error in /getArguments route: " + e)
 
