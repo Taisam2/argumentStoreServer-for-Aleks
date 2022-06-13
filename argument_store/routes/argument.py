@@ -1,7 +1,8 @@
 from typing import List
 from fastapi import APIRouter
 from argument_store.config.db import conn
-from argument_store.models.argument import Argument
+from argument_store.models.Argument import Argument
+from argument_store.models.ArgumentOptionEnum import ArgumentOptionEnum
 from argument_store.schemas.argument import argumentsEntity
 
 from fastapi.encoders import jsonable_encoder
@@ -23,7 +24,10 @@ async def findAllArguments():
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
     try:
-        conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
+        for option in ArgumentOptionEnum:
+            if option == argument.argumentOption:
+                print("option: " + option + "\nArgumentoption: " + argument.argumentOption)
+        #conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
         return "Argument erfolgreich hinzugefügt!"
     except Exception as e:
         print("Error in /addArgument route: " + e)

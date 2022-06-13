@@ -2,9 +2,9 @@ from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 
-from argument_store.models.topic import Topic
+from argument_store.models.Topic import Topic
 from argument_store.config.db import conn
-from argument_store.schemas.topic import topicEntity, topicsEntity
+from argument_store.schemas.topic import topicsEntity
 
 topic = APIRouter() 
 
