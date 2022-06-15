@@ -1,7 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 
-from argument_store.models.ArgumentOption import ArgumentOption
+from argument_store.models.argumentOption import ArgumentOption
 from argument_store.models.ArgumentOptionEnum import ArgumentOptionEnum
 
 

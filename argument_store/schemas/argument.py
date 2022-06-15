@@ -1,3 +1,6 @@
+from bson import ObjectId
+
+
 def argumentEntity(item) -> dict:
     return {
         "id": str(item["_id"]),
