@@ -1,4 +1,5 @@
 from typing import List
+from urllib.error import HTTPError
 import requests
 from fastapi import APIRouter, HTTPException
 
@@ -15,17 +16,17 @@ argument = APIRouter()
 async def findAllArguments():
     try:
         if not conn.ArgumentStore.local.argument.find():
-            raise HTTPException(status_code=444, detail="Verbindung zur Datenbank unterbrochen.")
+            return HTTPException(status_code=444, detail="Verbindung zur Datenbank unterbrochen.")
         response: List = argumentsEntity(conn.ArgumentStore.local.argument.find())
         if not response:
-            #raise HTTPError(code=404, msg="Keine Argumente gespeichert.", url="", hdrs="" , fp="")
-            raise HTTPException(status_code=204, detail="Keine Argumente gespeichert.")
+            #return HTTPError(code=404, msg="Keine Argumente gespeichert.", url="", hdrs="" , fp="")
+            raise HTTPException(status_code=404, detail="Keine Argumente gespeichert.")
         else:
             return response
     except requests.HTTPError as err:
         return {"code": err.status}
-    except Exception as err:
-        print("Error in /getArguments route: " + err)
+    # except Exception as err:
+    #     return err
 
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
@@ -35,10 +36,9 @@ async def createArgument(argument: Argument):
         else:
             allArguments: List = argumentsEntity(conn.ArgumentStore.local.argument.find())
         for args in allArguments:
-            if args == argument:
+            if args['description'] == argument.description:
                 raise HTTPException(status_code=409, detail="Argument ist bereits vorhanden.")
-            else:
-                conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
+        conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))       
         return "Argument erfolgreich hinzugefügt!"
     except requests.HTTPError as err:
         return {"code": err.status}

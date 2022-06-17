@@ -6,7 +6,7 @@ import requests
 
 from argument_store.models.Topic import Topic
 from argument_store.config.db import conn
-from argument_store.schemas.topic import topicEntity, topicsEntity
+from argument_store.schemas.topic import topicsEntity
 
 topic = APIRouter() 
 
@@ -17,7 +17,7 @@ async def findAllTopics():
             raise HTTPException(status_code=444, detail="Verbindung zur Datenbank unterbrochen.")
         response: List = topicsEntity(conn.ArgumentStore.local.topic.find())
         if response == []:
-             raise HTTPException(status_code=204, detail="Keine Themen gespeichert.")
+            raise HTTPException(status_code=404, detail="Keine Themen gespeichert.")
         else:
             return response
     except requests.HTTPError as err:
@@ -66,5 +66,5 @@ async def addSolutionToArray(topic: Topic):
             conn.ArgumentStore.local.topic.update_one({ "_id": ObjectId(topic.id)}, { '$push': {"solutionOption":{ "$each": topic.solutionOption} }})        
         return "Lösungsvorschlag erfolgreich zum Thema hinzugefügt!"
     except requests.HTTPError as err:
-        return {"code": err.status} 
+        return err.status
     
