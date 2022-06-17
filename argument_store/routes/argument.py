@@ -21,21 +21,31 @@ async def findAllArguments():
         response: List = argumentsEntity(conn.ArgumentStore.local.argument.find())
         if not response:
             #raise HTTPError(code=404, msg="Keine Argumente gespeichert.", url="", hdrs="" , fp="")
-            raise HTTPException(status_code=404, detail="Keine Argumente gespeichert.")
+            raise HTTPException(status_code=204, detail="Keine Argumente gespeichert.")
         else:
             return response
     except requests.HTTPError as err:
         return {"code": err.status}
     except Exception as err:
-        print("Hier")
+        print("Error in /getArguments route: " + err)
 
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
     try:
-        conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
+        if not conn.ArgumentStore.local.argument.find():
+            raise HTTPException(status_code=444, detail="Verbindung zur Datenbank unterbrochen.")
+        else:
+            allArguments = conn.ArgumentStore.local.argument.find()
+        for args in allArguments:
+            if args == argument:
+                raise HTTPException(status_code=409, detail="Argument ist bereits vorhanden.")
+            else:
+                conn.ArgumentStore.local.argument.insert_one(jsonable_encoder(argument))
         return "Argument erfolgreich hinzugefügt!"
-    except Exception as e:
-        print("Error in /addArgument route: " + e)
+    except requests.HTTPError as err:
+        return {"code": err.status}
+    except Exception as err:
+        print("Error in /addArgument route: " + err)
 
     
 
