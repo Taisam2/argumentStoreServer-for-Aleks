@@ -1,8 +1,6 @@
 from typing import List
 import requests
-from typing_extensions import Self
-from urllib.error import HTTPError
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException
 
 from argument_store.config.db import conn
 from argument_store.models.argument import Argument
@@ -35,7 +33,7 @@ async def createArgument(argument: Argument):
         if not conn.ArgumentStore.local.argument.find():
             raise HTTPException(status_code=444, detail="Verbindung zur Datenbank unterbrochen.")
         else:
-            allArguments = conn.ArgumentStore.local.argument.find()
+            allArguments: List = argumentsEntity(conn.ArgumentStore.local.argument.find())
         for args in allArguments:
             if args == argument:
                 raise HTTPException(status_code=409, detail="Argument ist bereits vorhanden.")
@@ -44,8 +42,6 @@ async def createArgument(argument: Argument):
         return "Argument erfolgreich hinzugefügt!"
     except requests.HTTPError as err:
         return {"code": err.status}
-    except Exception as err:
-        print("Error in /addArgument route: " + err)
 
     
 
