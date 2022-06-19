@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter
 from argument_store.config.db import conn
-from argument_store.models.argument import Argument
-from argument_store.models.ArgumentOptionEnum import ArgumentOptionEnum
+from argument_store.models.argument.argument import Argument
+from argument_store.models.argument.argumentOptionEnum import ArgumentOptionEnum
 from argument_store.schemas.argument import argumentsEntity
 
 from fastapi.encoders import jsonable_encoder

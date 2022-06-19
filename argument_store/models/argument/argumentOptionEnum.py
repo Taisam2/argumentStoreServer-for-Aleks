@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ArgumentOptionEnum(str, Enum):
+class ArgumentOptionEnum(Enum):
     PRO: str = 'Pro'
     CONTRA: str = 'Contra'
     FRAGE: str = 'Frage'

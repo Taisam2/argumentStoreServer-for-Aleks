@@ -1,11 +1,8 @@
-from bson import ObjectId
-
-
 def argumentEntity(item) -> dict:
     return {
         "id": str(item["_id"]),
         "topicId": item["topicId"],
-        "argumentOption": item["argumentOption"],
+        "argumentOption": item["argumentOptionEnum"],
         "solutionOption": item["solutionOption"],
         "description": item["description"],
         "date": item["date"],
