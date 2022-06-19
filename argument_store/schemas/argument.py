@@ -2,7 +2,7 @@ def argumentEntity(item) -> dict:
     return {
         "id": str(item["_id"]),
         "topicId": item["topicId"],
-        "argumentOption": item["argumentOptionEnum"],
+        "argumentOption": item["argumentOption"],
         "solutionOption": item["solutionOption"],
         "description": item["description"],
         "date": item["date"],

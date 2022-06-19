@@ -16,7 +16,7 @@ async def findAllTopics():
             return print("Bisher sind keine Themen gespeichert.")
         return topicsEntity(conn.ArgumentStore.local.topic.find())
     except Exception as e:
-        print("Error in /getTopics route: " + e)
+        print("Error in /getTopics route: ")
 
 @topic.get('/findById')
 async def findTopicById(searchedId: str):
@@ -25,7 +25,7 @@ async def findTopicById(searchedId: str):
             return "Thema mit der id: " + searchedId + " ist nicht vorhanden."
         return topicsEntity(conn.ArgumentStore.local.topic.find({ "_id": ObjectId(searchedId)}))
     except Exception as e:
-        print("Error in /findById Topics route: " + e) 
+        print("Error in /findById Topics route: ") 
 
 @topic.post('/addTopic')
 async def createTopic(topic: Topic):
@@ -33,7 +33,7 @@ async def createTopic(topic: Topic):
         conn.ArgumentStore.local.topic.insert_one(jsonable_encoder(topic))
         return "Thema erfolgreich hinzugefügt!"
     except Exception as e:
-        print("Error in /addTopic route: " + e) 
+        print("Error in /addTopic route: ") 
 
 @topic.post('/addSolutionOption')
 async def addSolutionToArray(topic: Topic):
@@ -43,5 +43,5 @@ async def addSolutionToArray(topic: Topic):
         )
         return "Lösungsvorschlag erfolgreich zum Thema hinzugefügt!"
     except Exception as e:
-        print("Error in /addSolutionOption route: " + e)
+        print("Error in /addSolutionOption route: ")
     

@@ -16,7 +16,3 @@ class Argument(BaseModel):
     approval: str
     links: str
     linkedArguments: str
-
-
-
-print(Argument.schema_json(indent=2))
