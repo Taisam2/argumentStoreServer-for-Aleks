@@ -42,6 +42,8 @@ async def createTopic(topic: Topic):
         else:
             with session.start_transaction():
                 topic_collection.insert_one(jsonable_encoder(topic))
+                session.commit_transaction()     
+                session.end_session()   
         return "Thema erfolgreich hinzugefügt!"
     
 @topic.post('/addSolutionOption')
@@ -55,5 +57,7 @@ async def addSolutionToArray(topic: Topic):
                 raise HTTPException(status_code=409, detail="Lösungsvorschlag ist bereits vorhanden.")
         else:
             with session.start_transaction():
-                topic_collection.update_one({ "_id": ObjectId(topic.id)}, { '$push': {"solutionOption":{ "$each": topic.solutionOption} }})        
+                topic_collection.update_one({ "_id": ObjectId(topic.id)}, { '$push': {"solutionOption":{ "$each": topic.solutionOption} }})
+                session.commit_transaction()     
+                session.end_session()           
         return "Lösungsvorschlag erfolgreich zum Thema hinzugefügt!"    
