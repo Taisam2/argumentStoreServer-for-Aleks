@@ -32,6 +32,6 @@ async def createArgument(argument: Argument):
         for args in allArguments:
             if args['description'] == argument.description:
                 raise HTTPException(status_code=409, detail="Argument ist bereits vorhanden.")
-        with session.start_transaction:
+        with session.start_transaction():
             argument_collection.insert_one(jsonable_encoder(argument))       
         return "Argument erfolgreich hinzugefügt!"
