@@ -6,6 +6,8 @@ from argument_store.routes.topic import topic
 
 origins = [
     "https://argument-store-client.azurewebsites.net/",
+    "https://argument-store-client.azurewebsites.net/topics",
+    "https://argument-store-client.azurewebsites.net/arguments",
 ]
 
 
