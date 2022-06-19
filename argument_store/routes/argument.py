@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 
 from argument_store.config.db import DatabaseClient
-from argument_store.models.argument import Argument
+from argument_store.models.argument.argument import Argument
 
 from argument_store.schemas.argument import argumentsEntity
 
