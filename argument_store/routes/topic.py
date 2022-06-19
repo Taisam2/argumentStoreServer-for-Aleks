@@ -10,6 +10,7 @@ from argument_store.schemas.topic import topicsEntity
 topic = APIRouter() 
 
 client = DatabaseClient()
+database_client = client.create_database_client()
 
 @topic.get('/getTopics')
 async def findAllTopics():
@@ -22,7 +23,6 @@ async def findAllTopics():
 
 @topic.get('/findById')
 async def findTopicById(searchedId: str):
-    database_client = client.create_database_client()
     with database_client.start_session() as session:
         topic_collection = client.get_topic_collection()
         topic: Topic = topicsEntity(topic_collection.find({ "_id": ObjectId(searchedId)}))
@@ -33,7 +33,6 @@ async def findTopicById(searchedId: str):
 
 @topic.post('/addTopic')
 async def createTopic(topic: Topic):
-    database_client = client.create_database_client()
     with database_client.start_session() as session:
         topic_collection = client.get_topic_collection()
         topicsFromDb: List = topicsEntity(topic_collection.find({ "_id": ObjectId(topic.id)}))
