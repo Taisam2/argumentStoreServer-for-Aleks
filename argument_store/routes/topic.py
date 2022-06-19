@@ -5,6 +5,7 @@ from fastapi.encoders import jsonable_encoder
 
 from argument_store.models.topic import Topic
 from argument_store.config.db import DatabaseClient
+
 from argument_store.schemas.topic import topicsEntity
 
 topic = APIRouter() 
