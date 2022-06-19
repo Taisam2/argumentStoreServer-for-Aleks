@@ -40,4 +40,4 @@ app.include_router(topic, tags=["topics"])
 
 @app.get("/")
 async def main():
-    return {"message": "Hello World"}
+    return {"message": "Server is running."}
