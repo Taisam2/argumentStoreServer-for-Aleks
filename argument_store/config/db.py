@@ -1,20 +1,27 @@
 from pymongo import MongoClient
+import pymongo
 from argument_store.config.util import DbUtil
+import logging
 
+class DatabaseClient():
 
-u = DbUtil()
+    def __init__(self):
+        self._db_util = DbUtil()
+        self._conn_string = "mongodb+srv://" + self._db_util.username +":" + self._db_util.passwort + "@argumentstore.lkyrg.mongodb.net/?retryWrites=true&w=majority"
 
-#or not conn.get_database("ArgumentStore").get_collection("local.argument")
-conn_string = "mongodb+srv://" + u.username +":" + u.passwort + "@argumentstore.lkyrg.mongodb.net/?retryWrites=true&w=majority"
+    def create_database_client(self):
+        try:
+            self._client = MongoClient(self._conn_string, serverSelectionTimeoutMS=5000)
+            try:
+                self._client.server_info()
+                return self._client
+            except Exception as e:
+                logging.error("Connection failed!! Error Message: %s %s" % (type(e),e))
+        except pymongo.errors.ConnectionFailure as e:
+            logging.error("Client couldn't be created! Error Message: %s %s" % (type(e),e))
 
-conn = MongoClient(conn_string, serverSelectionTimeoutMS=5000)
+    def get_argument_collection(self):
+        return self._client.ArgumentStore.local.argument
 
-try:
-    print("Server is running with the following properties:\n")
-    print(conn.server_info)
-    #raise HTTPException(status_code=504, detail="Verbindung zur Datenbank unterbrochen.")
-except Exception as e:
-    print("DB-connection failed: \n")
-    print(e)
-
-
+    def get_topic_collection(self):
+        return self._client.ArgumentStore.local.topic
