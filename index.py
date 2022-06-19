@@ -8,7 +8,7 @@ from argument_store.routes.topic import topic
 
 
 origins = [
-    "http://localhost:4200",
+    "https://argument-store-client.azurewebsites.net/",
 ]
 
 
