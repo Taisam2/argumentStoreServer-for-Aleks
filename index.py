@@ -4,13 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from argument_store.routes.argument import argument
 from argument_store.routes.topic import topic
 
-
-
-
 origins = [
     "https://argument-store-client.azurewebsites.net/",
 ]
-
 
 
 tags_metadata = [
