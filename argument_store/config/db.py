@@ -25,3 +25,6 @@ class DatabaseClient():
 
     def get_topic_collection(self):
         return self._client.ArgumentStore.local.topic
+
+    def get_rating_collection(self):
+        return self._client.ArgumentStore.local.rating
