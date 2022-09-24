@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from argument_store.routes.argument import argument
 from argument_store.routes.topic import topic
+from argument_store.routes.rating import rating
 
 origins = ["*"]
 #     "https://argument-store-client.azurewebsites.net/",
@@ -18,6 +19,10 @@ tags_metadata = [
     {
         "name": "topics",
         "description": "Operations with Topics."
+    },
+    {
+        "name": "rating",
+        "description": "Operations with Ratings."
     }
 ]
 
@@ -33,6 +38,7 @@ app.add_middleware(
 
 app.include_router(argument, tags=["arguments"])
 app.include_router(topic, tags=["topics"])
+app.include_router(rating, tags=["rating"])
 
 
 @app.get("/")
