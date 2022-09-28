@@ -22,7 +22,7 @@ async def findAllTopics():
     else:
         return response
 
-@topic.get('/findTopicById')
+@topic.get('/findTopicById/{searchedId}')
 async def findTopicById(searchedId: str):
     with database_client.start_session() as session:
         topic_collection = client.get_topic_collection()
