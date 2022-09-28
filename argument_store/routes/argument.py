@@ -39,7 +39,7 @@ async def createArgument(argument: Argument):
         return "Argument erfolgreich hinzugefügt!"
 
 @argument.get('/findArgumentById')
-async def findTopicById(searchedId: str):
+async def findArugmentById(searchedId: str):
     with database_client.start_session() as session:
         topic_collection = client.get_topic_collection()
         topic: Argument = argumentsEntity(topic_collection.find({ "_id": ObjectId(searchedId)}))
