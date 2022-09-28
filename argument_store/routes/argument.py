@@ -1,4 +1,5 @@
 from typing import List
+from bson import ObjectId
 from fastapi import APIRouter, HTTPException
 
 from argument_store.config.db import DatabaseClient
@@ -11,10 +12,10 @@ from fastapi.encoders import jsonable_encoder
 argument = APIRouter()
 
 client = DatabaseClient()
+database_client = client.create_database_client
 
 @argument.get('/getArguments')
 async def findAllArguments():
-    database_client = client.create_database_client()
     with database_client.start_session() as session:
         argument_collection = client.get_argument_collection()
         response: List = argumentsEntity(argument_collection.find(session=session))
@@ -25,7 +26,6 @@ async def findAllArguments():
 
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
-    database_client = client.create_database_client()
     with database_client.start_session() as session:
         argument_collection = client.get_argument_collection()
         allArguments: List = argumentsEntity(argument_collection.find())
@@ -37,3 +37,13 @@ async def createArgument(argument: Argument):
             session.commit_transaction()     
             session.end_session()     
         return "Argument erfolgreich hinzugefügt!"
+
+@argument.get('/findArgumentById')
+async def findTopicById(searchedId: str):
+    with database_client.start_session() as session:
+        topic_collection = client.get_topic_collection()
+        topic: Argument = argumentsEntity(topic_collection.find({ "_id": ObjectId(searchedId)}))
+        if not topic:
+            raise HTTPException(status_code=204, detail="Kein Argument mit der ID: " + searchedId + " vorhanden.")
+        else:
+            return topic
