@@ -12,12 +12,12 @@ from fastapi.encoders import jsonable_encoder
 argument = APIRouter()
 
 client = DatabaseClient()
-database_client = client.create_database_client
 
 @argument.get('/getArguments')
 async def findAllArguments():
+    database_client = client.create_database_client()
     with database_client.start_session() as session:
-        argument_collection = database_client.get_argument_collection()
+        argument_collection = client.get_argument_collection()
         response: List = argumentsEntity(argument_collection.find(session=session))
         if not response:
             raise HTTPException(status_code=404, detail="Keine Argumente gespeichert.")
@@ -26,6 +26,7 @@ async def findAllArguments():
 
 @argument.post('/addArgument')
 async def createArgument(argument: Argument):
+    database_client = client.create_database_client()
     with database_client.start_session() as session:
         argument_collection = database_client.get_argument_collection()
         allArguments: List = argumentsEntity(argument_collection.find())
@@ -40,6 +41,7 @@ async def createArgument(argument: Argument):
 
 @argument.get('/findArgumentById')
 async def findArugmentById(searchedId: str):
+    database_client = client.create_database_client()
     with database_client.start_session() as session:
         argument_collection = database_client.get_argument_collection()
         argument: Argument = argumentsEntity(argument_collection.find({ "_id": ObjectId(searchedId)}))
