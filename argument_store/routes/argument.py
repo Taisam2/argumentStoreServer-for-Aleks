@@ -41,9 +41,9 @@ async def createArgument(argument: Argument):
 @argument.get('/findArgumentById')
 async def findArugmentById(searchedId: str):
     with database_client.start_session() as session:
-        topic_collection = client.get_topic_collection()
-        topic: Argument = argumentsEntity(topic_collection.find({ "_id": ObjectId(searchedId)}))
-        if not topic:
+        argument_collection = client.get_argument_collection()
+        argument: Argument = argumentsEntity(argument_collection.find({ "_id": ObjectId(searchedId)}))
+        if not argument:
             raise HTTPException(status_code=204, detail="Kein Argument mit der ID: " + searchedId + " vorhanden.")
         else:
-            return topic
+            return argument
