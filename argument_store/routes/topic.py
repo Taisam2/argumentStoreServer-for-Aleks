@@ -22,20 +22,20 @@ async def findAllTopics():
     else:
         return response
 
-@topic.get('/findById')
+@topic.get('/findTopicById')
 async def findTopicById(searchedId: str):
     with database_client.start_session() as session:
         topic_collection = client.get_topic_collection()
         topic: Topic = topicsEntity(topic_collection.find({ "_id": ObjectId(searchedId)}))
         if not topic:
-            raise HTTPException(status_code=204, detail="Keine Themen mit der ID: " + searchedId + " gespeichert.")
+            raise HTTPException(status_code=204, detail="Kein Thema mit der ID: " + searchedId + " vorhanden.")
         else:
             return topic
 
 @topic.post('/addTopic')
 async def createTopic(topic: Topic):
     with database_client.start_session() as session:
-        topic_collection = client.get_topic_collection()
+        topic_collection = database_client.get_topic_collection()
         topicsFromDb: List = topicsEntity(topic_collection.find({ "_id": ObjectId(topic.id)}))
         if topicsFromDb[0]['title'] == topic.title:
             raise HTTPException(status_code=409, detail="Thema ist bereits vorhanden.")
