@@ -9,5 +9,5 @@ def ratingEntity(item) -> dict:
         "date": item["date"]
     }
 
-def argumentsEntity(entity) -> list: 
+def ratingsEntity(entity) -> list: 
     return [ratingEntity(item) for item in entity]

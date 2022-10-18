@@ -1,6 +1,4 @@
-from typing import List
-from fastapi import APIRouter, HTTPException
-
+from fastapi import APIRouter
 from argument_store.config.db import DatabaseClient
 from argument_store.models.rating.rating import Rating
 
@@ -28,3 +26,14 @@ async def addRating(rating: Rating):
             session.end_session()
     return "Rating erfolgreich hinzugefügt!"
 
+@rating.post('/addRatings')
+async def addRatings(ratings: list[Rating]):
+    database_client = client.create_database_client()
+    with database_client.start_session() as session:
+        rating_collection = client.get_rating_collection()
+        with session.start_transaction():
+            for rating in ratings:
+                rating_collection.insert_one(jsonable_encoder(rating))  
+            session.commit_transaction()     
+            session.end_session()
+    return "Rating erfolgreich hinzugefügt!"
