@@ -1,6 +1,6 @@
-from http.client import HTTPException
+from typing import List
 from fastapi import APIRouter
-import pandas
+import pandas as pd
 from argument_store.config.db import DatabaseClient
 from argument_store.models.rating.rating import Rating
 
@@ -31,10 +31,7 @@ async def addRating(rating: Rating):
 @rating.post('/addRatings')
 async def addRatings(ratings: list[Rating]):
     database_client = client.create_database_client()
-
-
     with database_client.start_session() as session:
-
         rating_collection = client.get_rating_collection()
         with session.start_transaction():
             for rating in ratings:
@@ -43,13 +40,20 @@ async def addRatings(ratings: list[Rating]):
             session.end_session()
     return "Rating erfolgreich hinzugefügt!"
 
-
-@rating.get('export-csv')
+@rating.get('/allRatings')
 async def exposrtCsv():    
     database_client = client.create_database_client()
     with database_client.start_session() as session:
         rating_collection = client.get_rating_collection()
-        if not rating_collection:
-            raise HTTPException(status_code=204, detail="Keine Ratings vorhanden.")
-        else:
-            return rating_collection.to_csv("ratings-export.csv", ",")
+        response: List = ratingsEntity(rating_collection.find(session=session))
+        return response
+
+
+@rating.get('/export-csv')
+async def exposrtCsv():    
+    database_client = client.create_database_client()
+    with database_client.start_session() as session:
+        rating_collection = client.get_rating_collection()
+        response: List = ratingsEntity(rating_collection.find(session=session))
+        return pd.DataFrame({'ratings:': response}).to_csv("ratings-export.csv")
+
