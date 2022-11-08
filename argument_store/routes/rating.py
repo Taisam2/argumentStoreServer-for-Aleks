@@ -53,8 +53,8 @@ async def exposrtCsv():
 @rating.get('/export-csv')
 async def exposrtCsv():    
     database_client = client.create_database_client()
-    pc_username = os.getlogin()
-    download_path = "C:/Users/"+ pc_username + "/Downloads/ratings-export.csv"
+    ##pc_username = os.getlogin()
+    download_path = "C:/Users/Mathias/Downloads/ratings-export.csv"
     with database_client.start_session() as session:
         rating_collection = client.get_rating_collection()
         response: List = ratingsEntity(rating_collection.find(session=session))
