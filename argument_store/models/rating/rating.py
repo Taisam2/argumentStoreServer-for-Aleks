@@ -1,7 +1,8 @@
 from datetime import datetime
 from xmlrpc.client import boolean
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Union
+from datetime import datetime
 
 class Rating(BaseModel):
     optionNumber: int
@@ -10,4 +11,4 @@ class Rating(BaseModel):
     sol_rat_1: float
     sol_rat_2: float
     sol_rat_3: Union[boolean, None] = False
-    date: Union[datetime, None] = datetime.now().strftime("%d:%m:%Y %H:%M:%S")
+    date: datetime = Field(default_factory=datetime.utcnow)
