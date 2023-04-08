@@ -4,5 +4,5 @@ class DbUtil:
 
 
     def __init__(self):
-        self.username = quote_plus('ArgumentStoreAdmin')
-        self.passwort = quote_plus('Ajato2022.2022')
+        self.username = quote_plus('<ADD YOUR MONGODB USERNAME>')
+        self.passwort = quote_plus('<ADD YOUR MONGODB PASSWORD')
