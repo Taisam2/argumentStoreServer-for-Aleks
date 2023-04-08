@@ -7,7 +7,7 @@ class DatabaseClient():
 
     def __init__(self):
         self._db_util = DbUtil()
-        self._conn_string = "mongodb+srv://" + self._db_util.username +":" + self._db_util.passwort + "@argumentstore.lkyrg.mongodb.net/?retryWrites=true&w=majority"
+        self._conn_string = "mongodb+srv://" + self._db_util.username +":" + self._db_util.passwort + "@<ADD YOUR MONGODB DOMAIN NAME>"
 
     def create_database_client(self):
         try:
