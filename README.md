@@ -1,3 +1,23 @@
+# FAST API Server
+Check out the FAST API documentation here:
+https://fastapi.tiangolo.com/
+
+## run the server in dev environment
+
+uvicorn main:app --reload
+
+## reach swagger docs for configures routes and testing
+
+local environment --> http://127.0.0.1:8000/docs
+
+## run the server in a production environment (deployed, e.g. Azure App Service)
+
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
+
+## Further Questions
+
+Ask Santa Claus, you momma or Taisam2 a.k.a the Mofo of all Mofos
+
 # Swagger generated server
 
 ## Overview
